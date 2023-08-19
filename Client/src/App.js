@@ -1,23 +1,74 @@
-import "./App.css";
+import React, { useEffect, useState } from "react";
 import Cards from "./components/Cards/Cards";
-import SearchBar from "./components/SearchBar/SearchBar";
-import characters from "./data.js";
+import NavBar from "./components/Nav/Nav";
+import axios from "axios";
+import "./App.css";
 
 function App() {
+  const [characters, setCharacters] = useState([]); // Inicializa characters como una matriz vacía
+
+  const onSearch = (idPer) => {
+    let exist = false;
+
+    characters.forEach(({ id }) => {
+      if (id === parseInt(idPer)) {
+        alert("Ya esta en la vista ese personaje");
+        exist = true;
+      }
+    });
+
+    if (!exist) {
+      axios(`https://rickandmortyapi.com/api/character/${idPer}`).then(
+        ({ data }) => {
+          if (data.name) {
+            setCharacters((oldChars) => [...oldChars, data]);
+          } else {
+            window.alert("¡No hay personajes con este ID!");
+          }
+        }
+      );
+    }
+  };
+
+  const obternPersonajes = async () => {
+    const { data } = await axios("https://rickandmortyapi.com/api/character");
+    setCharacters(data.results.slice(0, 18));
+  };
+
+  const onClose = (id) => {
+    const filterCharacters = characters.filter((character) => {
+      return character.id !== parseInt(id);
+    });
+
+    setCharacters(filterCharacters);
+  };
+
+  const getRandomNumber = () => {
+    const min = 1; // Valor mínimo (inclusive)
+    const max = 826; // Valor máximo (inclusive)
+
+    // Genera un número decimal aleatorio entre 0 y 1
+    const randomNumber = Math.random();
+
+    // Ajusta el número aleatorio al rango deseado y redondea al entero más cercano
+    const result = Math.floor(randomNumber * (max - min + 1)) + min;
+
+    return result;
+  };
+
+  const handleClick = () => {
+    const random = getRandomNumber();
+    onSearch(random);
+  };
+
+  useEffect(() => {
+    obternPersonajes();
+  }, []);
+
   return (
     <div className="App">
-      <SearchBar onSearch={(characterID) => window.alert(characterID)} />
-      <Cards characters={characters} />
-      {/* <Card
-        id={Rick.id}
-        name={Rick.name}
-        status={Rick.status}
-        species={Rick.species}
-        gender={Rick.gender}
-        origin={Rick.origin.name}
-        image={Rick.image}
-        onClose={() => window.alert("Emulamos que se cierra la card")}
-      /> */}
+      <NavBar onSearch={onSearch} handleClick={handleClick} />
+      <Cards characters={characters} onClose={onClose} />
     </div>
   );
 }

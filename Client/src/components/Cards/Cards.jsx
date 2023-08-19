@@ -2,7 +2,7 @@ import React from "react";
 import Card from "../Card/Card";
 import styles from "./Cards.module.css";
 
-const Cards = ({ characters }) => {
+const Cards = ({ characters, onClose }) => {
   return (
     <div className={styles.cardsContainer}>
       {characters.map(
@@ -14,8 +14,10 @@ const Cards = ({ characters }) => {
               status={status}
               species={species}
               gender={gender}
-              origin={origin}
+              origin={origin.name}
               image={image}
+              onClose={onClose}
+              id={id}
             />
           );
         }
