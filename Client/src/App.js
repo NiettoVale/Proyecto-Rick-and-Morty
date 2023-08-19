@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
-import Cards from "./components/Cards/Cards";
-import NavBar from "./components/Nav/Nav";
+import { Routes, Route } from "react-router-dom";
 import axios from "axios";
+import Home from "./Views/Home/Home";
+import Detail from "./components/Detail/Detail";
+import NotFound from "./Views/404/NotFound";
 import "./App.css";
+import Landing from "./Views/Landing/Landing";
 
-function App() {
+const App = () => {
   const [characters, setCharacters] = useState([]); // Inicializa characters como una matriz vacía
 
   const onSearch = (idPer) => {
@@ -32,7 +35,7 @@ function App() {
 
   const obternPersonajes = async () => {
     const { data } = await axios("https://rickandmortyapi.com/api/character");
-    setCharacters(data.results.slice(0, 18));
+    setCharacters(data.results.slice(0, 3));
   };
 
   const onClose = (id) => {
@@ -67,10 +70,25 @@ function App() {
 
   return (
     <div className="App">
-      <NavBar onSearch={onSearch} handleClick={handleClick} />
-      <Cards characters={characters} onClose={onClose} />
+      <Routes>
+        <Route
+          path="/home"
+          element={
+            <Home
+              onSearch={onSearch}
+              handleClick={handleClick}
+              characters={characters}
+              onClose={onClose}
+            />
+          }
+        />
+
+        <Route path="/detail/:id" element={<Detail />} />
+        <Route path="/" element={<Landing />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
     </div>
   );
-}
+};
 
 export default App;

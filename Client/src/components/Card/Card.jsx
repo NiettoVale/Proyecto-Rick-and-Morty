@@ -1,5 +1,6 @@
 import React from "react";
 import styles from "./Card.module.css";
+import { Link } from "react-router-dom";
 
 const Card = ({
   id,
@@ -14,6 +15,10 @@ const Card = ({
   return (
     <div className={styles.contenedorCard}>
       <div className={styles.btnContainer}>
+        <Link to={`/detail/${id}`}>
+          <button className={styles.btnCardInfo}>Info</button>
+        </Link>
+
         <button
           onClick={() => {
             onClose(id);
@@ -28,21 +33,6 @@ const Card = ({
         <h2 className={styles.bioCard}>
           <span className={styles.spanCard}>Nombre: </span>
           {name}
-        </h2>
-        <h2 className={styles.bioCard}>
-          <span className={styles.spanCard}>Estatus: </span>
-          {status}
-        </h2>
-        <h2 className={styles.bioCard}>
-          <span className={styles.spanCard}>Especie: </span>
-          {species}
-        </h2>
-        <h2 className={styles.bioCard}>
-          <span className={styles.spanCard}>Género: </span> {gender}
-        </h2>
-        <h2 className={styles.bioCard}>
-          <span className={styles.spanCard}>Origen: </span>
-          {origin}
         </h2>
       </div>
 

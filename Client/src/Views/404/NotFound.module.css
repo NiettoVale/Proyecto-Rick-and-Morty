@@ -1,0 +1,49 @@
+.pageNot {
+  width: 100%;
+  margin-top: 30px;
+  padding-left: 20px;
+  padding-right: 20px;
+  background-color: #5e5e5e;
+  height: 100vh;
+  margin: 0;
+  overflow-x: hidden; /* Elimina la barra de desplazamiento horizontal */
+  overflow-y: hidden; /* Elimina la barra de desplazamiento vertical */
+}
+
+.pageNotImg {
+  width: 300px;
+  height: 420px;
+}
+
+.pageNotContainer {
+  padding-top: 20px;
+  flex-grow: 1;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+}
+
+.pageNotText,
+.pageNotText2 {
+  margin-left: 10px;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.pageNotButton {
+  width: 100px;
+  background-color: #50b958;
+  height: 40px;
+  border-radius: 5px;
+  color: #fff;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 3px;
+  /* margin-top: 20px; */
+}
+
+.pageNotButton:hover {
+  background-color: yellowgreen;
+  cursor: pointer;
+}

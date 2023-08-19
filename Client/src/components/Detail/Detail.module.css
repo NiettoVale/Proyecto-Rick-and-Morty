@@ -1,0 +1,59 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.fondoDetail {
+  background-image: url("../../image/rym.jpg");
+  background-size: cover;
+  background-position: 55%;
+  background-repeat: no-repeat;
+  height: 100vh;
+  display: flex; /* Agregamos flexbox para centrar vertical y horizontalmente */
+  justify-content: center; /* Centrar horizontalmente */
+  align-items: center; /* Centrar verticalmente */
+}
+
+.titleDetail {
+  color: white;
+}
+
+.infoContainer {
+  background-color: #6e69a898;
+  border-radius: 10px;
+  backdrop-filter: blur(5px);
+  padding: 20px;
+  width: 350px;
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: self-start;
+  margin-bottom: 20px;
+}
+
+.containerGeneral {
+  display: flex; /* Utilizamos flexbox para la disposición de elementos */
+  justify-content: space-between; /* Coloca los elementos en ambos extremos */
+  align-items: center; /* Centra verticalmente los elementos */
+  margin-left: 300px;
+}
+
+.containerGeneral img {
+  margin-left: 100px; /* Agrega un margen inferior para separación */
+  border-radius: 50%;
+  margin-bottom: 50px;
+  border: 5px rgb(32, 32, 32) solid;
+}
+
+.spanDetail {
+  color: white;
+  font-weight: bold;
+  font-size: 18px; /* Tamaño de fuente personalizado */
+  margin-bottom: 5px; /* Espacio entre el span y el párrafo */
+}
+
+.containerGeneral p {
+  color: #fc0808;
+  font-size: 16px; /* Tamaño de fuente personalizado */
+  margin-bottom: 10px; /* Espacio entre párrafos */
+}

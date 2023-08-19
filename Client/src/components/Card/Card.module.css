@@ -16,7 +16,8 @@
   align-items: center;
 }
 
-.btnCard {
+.btnCard,
+.btnCardInfo {
   margin: 0 auto;
   width: 25px;
   height: 25px;
@@ -27,8 +28,17 @@
   color: #333;
   font-weight: bold;
 }
+.btnCard {
+  margin-right: 10px;
+}
 
-.btnCard:hover {
+.btnCardInfo {
+  width: 35px;
+  margin-left: 10px;
+}
+
+.btnCard:hover,
+.btnCardInfo:hover {
   background-color: rgb(146, 146, 146);
   color: #ff1010;
   cursor: pointer;
