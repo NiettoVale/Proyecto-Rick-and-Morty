@@ -1,0 +1,55 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Centrar verticalmente */
+  justify-content: center; /* Centrar horizontalmente */
+  height: 100vh; /* Hace que el contenedor ocupe toda la altura de la ventana */
+  background-image: url("../../image/rick.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.imageContainer {
+  margin-bottom: 20px; /* Espacio entre la imagen y el formulario */
+}
+
+.imgForm {
+  max-width: 350px; /* Define el tamaño máximo de la imagen */
+  max-height: 300px;
+  border-radius: 50%;
+}
+
+.formContainer {
+  text-align: center; /* Alinea el contenido del formulario al centro */
+}
+
+.filter {
+  background-color: #ffffffa2;
+  border-radius: 10px;
+  backdrop-filter: blur(5px);
+  padding: 10px;
+  width: 350px;
+  height: 540px;
+  margin-left: 50px;
+}
+
+.error {
+  color: rgb(47, 0, 255);
+  font-weight: bold;
+}
+
+.button {
+  margin-top: 7px;
+
+  background-color: #007bff; /* Color de fondo del botón */
+  color: #fff; /* Color del texto del botón */
+  border: none; /* Quita el borde del botón */
+  padding: 10px 20px; /* Espaciado interno del botón */
+  border-radius: 5px; /* Bordes redondeados */
+  cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+  font-size: 16px; /* Tamaño de fuente del botón */
+}
+
+.button:hover {
+  background-color: #0056b3; /* Cambia el color de fondo al pasar el cursor */
+}

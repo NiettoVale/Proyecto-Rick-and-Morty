@@ -1,14 +1,31 @@
 import React, { useEffect, useState } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Home from "./Views/Home/Home";
 import Detail from "./components/Detail/Detail";
 import NotFound from "./Views/404/NotFound";
+import Form from "./Views/Form/Form";
 import "./App.css";
-import Landing from "./Views/Landing/Landing";
 
 const App = () => {
   const [characters, setCharacters] = useState([]); // Inicializa characters como una matriz vacía
+  const [access, setAccess] = useState(false);
+  const navigate = useNavigate();
+  const EMAIL = "ejemplo@gmail.com";
+  const PASSWORD = "bash56";
+
+  const login = (userData) => {
+    if (userData.password === PASSWORD && userData.email === EMAIL) {
+      setAccess(true);
+      navigate("/home");
+    } else {
+      alert("Incorrecto");
+    }
+  };
+
+  const logOut = () => {
+    setAccess(false);
+  };
 
   const onSearch = (idPer) => {
     let exist = false;
@@ -68,6 +85,9 @@ const App = () => {
     obternPersonajes();
   }, []);
 
+  useEffect(() => {
+    !access && navigate("/");
+  }, [access, navigate]);
   return (
     <div className="App">
       <Routes>
@@ -79,12 +99,13 @@ const App = () => {
               handleClick={handleClick}
               characters={characters}
               onClose={onClose}
+              logOut={logOut}
             />
           }
         />
 
         <Route path="/detail/:id" element={<Detail />} />
-        <Route path="/" element={<Landing />} />
+        <Route path="/" element={<Form login={login} />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </div>
