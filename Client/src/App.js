@@ -6,6 +6,7 @@ import Detail from "./components/Detail/Detail";
 import NotFound from "./Views/404/NotFound";
 import Form from "./Views/Form/Form";
 import "./App.css";
+import Favorites from "./components/favorites/Favorites";
 
 const App = () => {
   const [characters, setCharacters] = useState([]); // Inicializa characters como una matriz vacía
@@ -105,6 +106,7 @@ const App = () => {
         />
 
         <Route path="/detail/:id" element={<Detail />} />
+        <Route path="/favorites" element={<Favorites />} />
         <Route path="/" element={<Form login={login} />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
