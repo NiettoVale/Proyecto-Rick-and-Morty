@@ -1,6 +1,7 @@
 const express = require("express");
 const server = express();
 const router = require("./routes/index");
+const { conn } = require("./DB_CONNECTION");
 const PORT = 3001;
 
 server.use((req, res, next) => {
@@ -16,6 +17,14 @@ server.use((req, res, next) => {
 server.use(express.json());
 server.use("/rickandmorty", router);
 
-server.listen(PORT, () => {
-  console.log("Server raised in port: " + PORT);
-});
+conn
+  .sync({ force: false }) // Cambia a true si deseas que las tablas se vuelvan a crear cada vez que se reinicia el servidor
+  .then(() => {
+    console.log("Conexion a la base de datos exitosa");
+    server.listen(PORT, () => {
+      console.log("Server raised in port: " + PORT);
+    });
+  })
+  .catch((err) => {
+    console.error("Error syncing database:", err);
+  });
