@@ -6,7 +6,12 @@ import styles from "./Home.module.css";
 const Home = ({ onSearch, handleClick, characters, onClose, logOut }) => {
   return (
     <div className={styles.homeContainer}>
-      <NavBar onSearch={onSearch} handleClick={handleClick} logOut={logOut} />
+      <NavBar
+        onSearch={onSearch}
+        handleClick={handleClick}
+        logOut={logOut}
+        onClose={onClose}
+      />
       <Cards characters={characters} onClose={onClose} />
     </div>
   );

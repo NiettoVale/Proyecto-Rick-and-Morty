@@ -4,21 +4,30 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addFav, removeFav } from "../../redux/actions";
 
-const Card = ({ id, name, image, onClose }) => {
+const Card = ({ id, name, image, onClose, gender }) => {
   const [isFav, setIsFav] = useState(false);
   const myFavorites = useSelector((state) => state.myFavorites);
   const dispatch = useDispatch();
 
+  const character = {
+    id,
+    name,
+    gender,
+    image,
+  };
+
+  // Función para manejar el favorito
   const handleFavorite = () => {
     if (isFav) {
       setIsFav(false);
-      dispatch(removeFav(id));
+      dispatch(removeFav(id)); // Convierte el ID a cadena
     } else {
       setIsFav(true);
-      dispatch(addFav({ id, name, image }));
+      dispatch(addFav(character)); // Convierte el ID a cadena
     }
   };
 
+  // Comprobar si el personaje es un favorito al cargar el componente
   useEffect(() => {
     myFavorites.forEach((fav) => {
       if (fav.id === id) {
@@ -58,6 +67,11 @@ const Card = ({ id, name, image, onClose }) => {
         <h2 className={styles.bioCard}>
           <span className={styles.spanCard}>Nombre: </span>
           {name}
+        </h2>
+
+        <h2 className={styles.bioCard}>
+          <span className={styles.spanCard}>Género: </span>
+          {gender}
         </h2>
       </div>
 

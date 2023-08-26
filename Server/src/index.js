@@ -2,6 +2,7 @@ const express = require("express");
 const server = express();
 const router = require("./routes/index");
 const { conn } = require("./DB_CONNECTION");
+const morgan = require("morgan");
 const PORT = 3001;
 
 server.use((req, res, next) => {
@@ -16,6 +17,7 @@ server.use((req, res, next) => {
 });
 server.use(express.json());
 server.use("/rickandmorty", router);
+server.use(morgan("dev"));
 
 conn
   .sync({ force: false }) // Cambia a true si deseas que las tablas se vuelvan a crear cada vez que se reinicia el servidor

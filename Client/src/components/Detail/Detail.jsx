@@ -11,8 +11,10 @@ const Detail = () => {
   const obtenerPersonaje = async () => {
     try {
       const { data } = await axios(
-        `https://rickandmortyapi.com/api/character/${id}`
+        `http://localhost:3001/rickandmorty/character/${id}`
       );
+
+      console.log("Esta es la data del front", data);
 
       const newCharacter = {
         id: data.id,
@@ -20,8 +22,8 @@ const Detail = () => {
         status: data.status,
         species: data.species,
         gender: data.gender,
-        origin: data.origin.name,
-        location: data.location.name,
+        location: data.location,
+        origin: data.origin,
         image: data.image,
       };
 
@@ -34,7 +36,7 @@ const Detail = () => {
 
   useEffect(() => {
     obtenerPersonaje();
-  }, []);
+  }, [id]); // Cambiado a [id] en lugar de [obtenerPersonaje]
 
   return (
     <div className={styles.fondoDetail}>

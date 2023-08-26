@@ -1,6 +1,5 @@
-.favContainer {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  justify-items: center;
-  align-items: center;
+.filtersContainer {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 20px;
 }

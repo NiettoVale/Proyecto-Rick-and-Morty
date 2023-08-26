@@ -5,22 +5,36 @@ import Home from "./Views/Home/Home";
 import Detail from "./components/Detail/Detail";
 import NotFound from "./Views/404/NotFound";
 import Form from "./Views/Form/Form";
-import "./App.css";
 import Favorites from "./components/favorites/Favorites";
+import "./App.css";
 
 const App = () => {
-  const [characters, setCharacters] = useState([]); // Inicializa characters como una matriz vacía
-  const [access, setAccess] = useState(false);
+  const [characters, setCharacters] = useState([]);
+  const [access, setAccess] = useState();
   const navigate = useNavigate();
-  const EMAIL = "ejemplo@gmail.com";
-  const PASSWORD = "bash56";
+  // const EMAIL = "ejemplo@gmail.com";
+  // const PASSWORD = "bash56";
 
-  const login = (userData) => {
-    if (userData.password === PASSWORD && userData.email === EMAIL) {
-      setAccess(true);
-      navigate("/home");
-    } else {
-      alert("Incorrecto");
+  const login = async (userData) => {
+    try {
+      const { email, password } = userData;
+      const URL = "http://localhost:3001/rickandmorty/login/";
+      const response = await axios.get(URL, {
+        params: { email, password },
+      });
+
+      const { data } = response;
+      const { access } = data;
+
+      setAccess(data);
+
+      if (access) {
+        navigate("/home");
+      }
+    } catch (error) {
+      // Maneja errores si es necesario
+      alert("Error!!!");
+      console.error("Error en la solicitud de inicio de sesión:", error);
     }
   };
 
@@ -28,30 +42,46 @@ const App = () => {
     setAccess(false);
   };
 
-  const onSearch = (idPer) => {
+  const onSearch = async (idPer) => {
     let exist = false;
 
     characters.forEach(({ id }) => {
       if (id === parseInt(idPer)) {
-        alert("Ya esta en la vista ese personaje");
+        alert("Ya está en la vista ese personaje");
         exist = true;
       }
     });
 
     if (!exist) {
-      axios(`https://rickandmortyapi.com/api/character/${idPer}`).then(
-        ({ data }) => {
-          if (data.name) {
-            setCharacters((oldChars) => [...oldChars, data]);
-          } else {
-            window.alert("¡No hay personajes con este ID!");
-          }
+      try {
+        const response = await fetch(
+          `http://localhost:3001/rickandmorty/character/${idPer}`
+        );
+
+        if (response.status === 404) {
+          window.alert("¡No hay personajes con este ID!");
+          return;
         }
-      );
+
+        if (!response.ok) {
+          throw new Error("Error al obtener el personaje");
+        }
+
+        const data = await response.json();
+
+        if (data.name) {
+          setCharacters((oldChars) => [...oldChars, data]);
+        } else {
+          window.alert("¡No hay personajes con este ID!");
+        }
+      } catch (error) {
+        console.error("Error al obtener el personaje:", error);
+        window.alert("¡Hubo un error al obtener el personaje!");
+      }
     }
   };
 
-  const obternPersonajes = async () => {
+  const obtenerPersonajes = async () => {
     const { data } = await axios("https://rickandmortyapi.com/api/character");
     setCharacters(data.results.slice(0, 3));
   };
@@ -65,15 +95,10 @@ const App = () => {
   };
 
   const getRandomNumber = () => {
-    const min = 1; // Valor mínimo (inclusive)
-    const max = 826; // Valor máximo (inclusive)
-
-    // Genera un número decimal aleatorio entre 0 y 1
+    const min = 1;
+    const max = 826;
     const randomNumber = Math.random();
-
-    // Ajusta el número aleatorio al rango deseado y redondea al entero más cercano
     const result = Math.floor(randomNumber * (max - min + 1)) + min;
-
     return result;
   };
 
@@ -83,12 +108,13 @@ const App = () => {
   };
 
   useEffect(() => {
-    obternPersonajes();
+    obtenerPersonajes();
   }, []);
 
   useEffect(() => {
     !access && navigate("/");
   }, [access, navigate]);
+
   return (
     <div className="App">
       <Routes>
@@ -104,9 +130,8 @@ const App = () => {
             />
           }
         />
-
         <Route path="/detail/:id" element={<Detail />} />
-        <Route path="/favorites" element={<Favorites />} />
+        <Route path="/favorites" element={<Favorites onClose={onClose} />} />
         <Route path="/" element={<Form login={login} />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
